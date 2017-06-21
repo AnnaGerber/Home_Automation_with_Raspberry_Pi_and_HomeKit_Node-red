@@ -1,0 +1,95 @@
+[
+  {
+    "id": "bb87c61.ab4c438",
+    "type": "homekit-service",
+    "z": "35c3d6b9.82903a",
+    "accessory": "dcd28ec5.c286d",
+    "name": "Door Motion Sensor",
+    "serviceName": "MotionSensor",
+    "x": 603.5,
+    "y": 202,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f0265ffb.55152",
+    "type": "rpi-gpio in",
+    "z": "35c3d6b9.82903a",
+    "name": "Motion Sensor",
+    "pin": "7",
+    "intype": "tri",
+    "debounce": "25",
+    "read": false,
+    "x": 98.5,
+    "y": 218,
+    "wires": [
+      [
+        "bf871b3d.22d478",
+        "3564caed.05dc26"
+      ]
+    ]
+  },
+  {
+    "id": "bf871b3d.22d478",
+    "type": "function",
+    "z": "35c3d6b9.82903a",
+    "name": "Convert PIR reading",
+    "func": "const motionDetected = msg.payload;\nmsg.payload = {MotionDetected: !!motionDetected};\nreturn msg",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 321.5,
+    "y": 156,
+    "wires": [
+      [
+        "bb87c61.ab4c438"
+      ]
+    ]
+  },
+  {
+    "id": "1c122a64.c6c0e6",
+    "type": "rpi-gpio out",
+    "z": "35c3d6b9.82903a",
+    "name": "Buzzer",
+    "pin": "11",
+    "set": "",
+    "level": "0",
+    "out": "out",
+    "x": 478.5,
+    "y": 387,
+    "wires": []
+  },
+  {
+    "id": "3564caed.05dc26",
+    "type": "trigger",
+    "z": "35c3d6b9.82903a",
+    "op1": "1",
+    "op2": "0",
+    "op1type": "str",
+    "op2type": "str",
+    "duration": "200",
+    "extend": false,
+    "units": "ms",
+    "reset": "0",
+    "name": "",
+    "x": 269.5,
+    "y": 387,
+    "wires": [
+      [
+        "1c122a64.c6c0e6"
+      ]
+    ]
+  },
+  {
+    "id": "dcd28ec5.c286d",
+    "type": "homekit-accessory",
+    "z": "",
+    "accessoryName": "PIR Sensor",
+    "pinCode": "111-11-111",
+    "port": "",
+    "manufacturer": "Default Manufacturer",
+    "model": "Default Model",
+    "serialNo": "Default Serial Number",
+    "accessoryType": "10"
+  }
+]

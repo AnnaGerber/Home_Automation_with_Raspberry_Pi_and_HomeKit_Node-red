@@ -1,0 +1,137 @@
+[
+  {
+    "id": "7954f7e2.b8a718",
+    "type": "inject",
+    "z": "7dd78f6d.b253f",
+    "name": "every five minutes",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "60",
+    "crontab": "",
+    "once": false,
+    "x": 153,
+    "y": 131,
+    "wires": [
+      [
+        "15a79879.afe4f8"
+      ]
+    ]
+  },
+  {
+    "id": "15a79879.afe4f8",
+    "type": "rpi-dht22",
+    "z": "7dd78f6d.b253f",
+    "name": "Temperature and Humidity Sensor",
+    "topic": "rpi-dht11",
+    "dht": "11",
+    "pintype": 1,
+    "pin": "40",
+    "x": 271.2727355957031,
+    "y": 221.63636779785156,
+    "wires": [
+      [
+        "30275318.4e056c",
+        "edeba4b.5445a58"
+      ]
+    ]
+  },
+  {
+    "id": "edeba4b.5445a58",
+    "type": "function",
+    "z": "7dd78f6d.b253f",
+    "name": "Read temperature",
+    "func": "msg.payload = {\n    CurrentTemperature: parseFloat(msg.payload),\n    StatusActive: 1\n};\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 549.3636474609375,
+    "y": 142.90907287597656,
+    "wires": [
+      [
+        "ce75e1b9.e8a3b"
+      ]
+    ]
+  },
+  {
+    "id": "30275318.4e056c",
+    "type": "function",
+    "z": "7dd78f6d.b253f",
+    "name": "Read humidity",
+    "func": "msg.payload = {\n    CurrentRelativeHumidity:parseInt(msg.humidity),\n    StatusActive: 1\n};\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 393.4090881347656,
+    "y": 471.54547119140625,
+    "wires": [
+      [
+        "a86928f7.dfb1f8"
+      ]
+    ]
+  },
+  {
+    "id": "a86928f7.dfb1f8",
+    "type": "homekit-service",
+    "z": "7dd78f6d.b253f",
+    "accessory": "a6972bf3.87a2a8",
+    "name": "humidity",
+    "serviceName": "HumiditySensor",
+    "x": 658.4090881347656,
+    "y": 474.54547119140625,
+    "wires": [
+      [
+        "feff02ff.caa1"
+      ]
+    ]
+  },
+  {
+    "id": "feff02ff.caa1",
+    "type": "debug",
+    "z": "7dd78f6d.b253f",
+    "name": "",
+    "active": true,
+    "console": "false",
+    "complete": "true",
+    "x": 749.4090576171875,
+    "y": 267.54547119140625,
+    "wires": []
+  },
+  {
+    "id": "ce75e1b9.e8a3b",
+    "type": "homekit-service",
+    "z": "7dd78f6d.b253f",
+    "accessory": "6d35dd3b.f10664",
+    "name": "temperature",
+    "serviceName": "TemperatureSensor",
+    "x": 623,
+    "y": 200,
+    "wires": [
+      [
+        "feff02ff.caa1"
+      ]
+    ]
+  },
+  {
+    "id": "a6972bf3.87a2a8",
+    "type": "homekit-accessory",
+    "z": "",
+    "accessoryName": "Humidity Sensor",
+    "pinCode": "333-33-333",
+    "port": "",
+    "manufacturer": "Default Manufacturer",
+    "model": "Default Model",
+    "serialNo": "Default Serial Number",
+    "accessoryType": "10"
+  },
+  {
+    "id": "6d35dd3b.f10664",
+    "type": "homekit-accessory",
+    "z": "",
+    "accessoryName": "Temperature Sensor",
+    "pinCode": "222-22-222",
+    "port": "",
+    "manufacturer": "Default Manufacturer",
+    "model": "Default Model",
+    "serialNo": "Default Serial Number",
+    "accessoryType": "10"
+  }
+]
